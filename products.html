@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plated by Benny Products - Gourmet Dips and Relishes">
+    <title>Our Products - Plated by Benny</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .products-page {
+            padding: 80px 20px;
+            background-color: white;
+            min-height: 100vh;
+        }
+
+        .products-page .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .filter-section {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .filter-btn {
+            padding: 10px 25px;
+            border: 2px solid var(--primary-red);
+            background-color: transparent;
+            color: var(--primary-red);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-red);
+            color: white;
+        }
+
+        .filter-btn:hover {
+            background-color: var(--primary-red);
+            color: white;
+        }
+
+        .all-products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .product-details-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .product-details-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-details-image {
+            height: 280px;
+            background: var(--cream);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-details-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-details-card:hover .product-details-image img {
+            transform: scale(1.08);
+        }
+
+        .price-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-red);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .product-details-body {
+            padding: 25px;
+        }
+
+        .product-details-body h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--primary-red);
+        }
+
+        .product-details-body p {
+            font-size: 15px;
+            color: var(--light-text);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .ingredients-list {
+            background: var(--light-gold);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .ingredients-list strong {
+            color: var(--primary-red);
+        }
+
+        .product-specifications {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .spec-item {
+            background: var(--cream);
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        .spec-item strong {
+            display: block;
+            color: var(--primary-red);
+            margin-bottom: 3px;
+        }
+
+        .spec-item span {
+            color: var(--light-text);
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .product-actions button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-buy {
+            background-color: var(--primary-red);
+            color: white;
+        }
+
+        .btn-buy:hover {
+            background-color: var(--dark-red);
+        }
+
+        .btn-info {
+            border: 2px solid var(--primary-red);
+            color: var(--primary-red);
+            background-color: transparent;
+        }
+
+        .btn-info:hover {
+            background-color: var(--primary-red);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <img src="assets/logo.png" alt="Plated by Benny" class="logo">
+                <span class="brand-name">Plated by Benny</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="products.html" class="nav-link active">Products</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section style="background: linear-gradient(135deg, var(--cream) 0%, var(--light-gold) 100%); padding: 60px 20px; text-align: center;">
+        <h1 style="font-size: 42px; margin-bottom: 10px; color: var(--primary-red);">Our Products</h1>
+        <p style="font-size: 18px; color: var(--light-text);">Handmade gourmet dips and relishes with natural ingredients</p>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-page">
+        <div class="container">
+            <div class="filter-section">
+                <h3 style="color: var(--primary-red);">Filter By Category</h3>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterProducts('all')">All Products</button>
+                    <button class="filter-btn" onclick="filterProducts('dips')">Dips</button>
+                    <button class="filter-btn" onclick="filterProducts('spreads')">Spreads</button>
+                    <button class="filter-btn" onclick="filterProducts('relishes')">Relishes</button>
+                </div>
+            </div>
+
+            <div class="all-products-grid">
+                <!-- Product 1 -->
+                <div class="product-details-card" data-category="relishes">
+                    <div class="product-details-image">
+                        <img src="assets/malabar-carrot.jpg" alt="Malabar Spiced Carrot">
+                        <span class="price-badge">₹229</span>
+                    </div>
+                    <div class="product-details-body">
+                        <h3>Malabar Spiced Carrot</h3>
+                        <p>A bold, tangy & aromatic carrot pickle in the true Malabar style. A flavor explosion you'll come back to.</p>
+                        <div class="ingredients-list">
+                            <strong>Ingredients:</strong><br>
+                            Carrot, Tamarind, Coconut, Roasted Spices & Lentils
+                        </div>
+                        <div class="product-specifications">
+                            <div class="spec-item">
+                                <strong>Weight</strong>
+                                <span>180g</span>
+                            </div>
+                            <div class="spec-item">
+                                <strong>Shelf Life</strong>
+                                <span>1 Month</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-buy">Order Now</button>
+                            <button class="btn-info">WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-details-card" data-category="dips">
+                    <div class="product-details-image">
+                        <img src="assets/labneh-pearls.jpg" alt="Labneh Pearls">
+                        <span class="price-badge">₹299</span>
+                    </div>
+                    <div class="product-details-body">
+                        <h3>Labneh Pearls</h3>
+                        <p>Oregano & Chilli Flakes flavoured strained yogurt dip. A perfect blend of creamy and zesty.</p>
+                        <div class="ingredients-list">
+                            <strong>Ingredients:</strong><br>
+                            Strained Yoghurt, Olive Oil, Oregano, Chilli Flakes
+                        </div>
+                        <div class="product-specifications">
+                            <div class="spec-item">
+                                <strong>Weight</strong>
+                                <span>180g</span>
+                            </div>
+                            <div class="spec-item">
+                                <strong>Shelf Life</strong>
+                                <span>2 Months</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-buy">Order Now</button>
+                            <button class="btn-info">WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-details-card" data-category="spreads">
+                    <div class="product-details-image">
+                        <img src="assets/honey-butter-blaze.jpg" alt="Honey Butter Blaze">
+                        <span class="price-badge">₹299</span>
+                    </div>
+                    <div class="product-details-body">
+                        <h3>Honey Butter Blaze</h3>
+                        <p>A perfect blend of sweet, savoury & a touch of heat. Ideal for toast, crackers, or just a spoonful of comfort.</p>
+                        <div class="ingredients-list">
+                            <strong>Ingredients:</strong><br>
+                            Butter, Honey, Garlic, Herbs
+                        </div>
+                        <div class="product-specifications">
+                            <div class="spec-item">
+                                <strong>Weight</strong>
+                                <span>180g</span>
+                            </div>
+                            <div class="spec-item">
+                                <strong>Shelf Life</strong>
+                                <span>2 Months</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-buy">Order Now</button>
+                            <button class="btn-info">WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-details-card" data-category="dips">
+                    <div class="product-details-image">
+                        <img src="assets/midnight-hummus.jpg" alt="Midnight Hummus">
+                        <span class="price-badge">₹229</span>
+                    </div>
+                    <div class="product-details-body">
+                        <h3>Midnight Hummus</h3>
+                        <p>Deep, creamy & irresistible. Our black chickpea hummus is a flavor you'll come back to.</p>
+                        <div class="ingredients-list">
+                            <strong>Ingredients:</strong><br>
+                            Black Chickpeas, White & Black Sesame, Olive Oil, Garlic, Lemon
+                        </div>
+                        <div class="product-specifications">
+                            <div class="spec-item">
+                                <strong>Weight</strong>
+                                <span>180g</span>
+                            </div>
+                            <div class="spec-item">
+                                <strong>Shelf Life</strong>
+                                <span>14 Days</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-buy">Order Now</button>
+                            <button class="btn-info">WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-details-card" data-category="relishes">
+                    <div class="product-details-image">
+                        <img src="assets/red-beret-salsa.jpg" alt="Red Beret Salsa">
+                        <span class="price-badge">₹229</span>
+                    </div>
+                    <div class="product-details-body">
+                        <h3>Red Beret Salsa</h3>
+                        <p>A smoky, zesty & aromatic red salsa roasted to perfection. The perfect companion to your meals.</p>
+                        <div class="ingredients-list">
+                            <strong>Ingredients:</strong><br>
+                            Roasted Tomato, Roasted Red Capsicum, Onion, Jalapeño, Garlic, Fresh Coriander
+                        </div>
+                        <div class="product-specifications">
+                            <div class="spec-item">
+                                <strong>Weight</strong>
+                                <span>180g</span>
+                            </div>
+                            <div class="spec-item">
+                                <strong>Shelf Life</strong>
+                                <span>7 Days</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-buy">Order Now</button>
+                            <button class="btn-info">WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Plated by Benny</h4>
+                    <p>Gourmet dips and relishes, handmade with love using natural ingredients.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="https://instagram.com/plated_by_benny" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/9953118010" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Plated by Benny. All rights reserved. Homemade with Love.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function filterProducts(category) {
+            const cards = document.querySelectorAll('.product-details-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            // Update button states
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(category) || (category === 'all' && btn.textContent === 'All Products')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                    }, 10);
+                } else {
+                    card.style.opacity = '0';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+
+        // Add click handlers to action buttons
+        document.querySelectorAll('.btn-buy').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const productName = btn.closest('.product-details-card').querySelector('h3').textContent;
+                openWhatsApp(productName);
+            });
+        });
+
+        document.querySelectorAll('.btn-info').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const productName = btn.closest('.product-details-card').querySelector('h3').textContent;
+                openWhatsApp(productName);
+            });
+        });
+
+        function openWhatsApp(productName = '') {
+            const phone = '9953118010';
+            const message = productName
+                ? `Hi! I'm interested in ordering ${productName} from Plated by Benny.`
+                : 'Hi! I would like to order from Plated by Benny.';
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`);
+        }
+    </script>
+    <script src="js/script.js"></script>
+</body>
+</html>
